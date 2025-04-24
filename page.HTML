@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stress Académique - Recherche</title>
+    <style>
+        :root {
+            --negative-color: #e63946;
+            --neutral-color: #f1faee;
+            --positive-color: #2a9d8f;
+            --text-color: #1d3557;
+            --background-color: #ffffff;
+            --highlight-color: #f7f7f7;
+            --section-title: #457b9d;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        header {
+            background: linear-gradient(to right, var(--negative-color), var(--positive-color));
+            color: white;
+            text-align: center;
+            padding: 25px 15px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+
+        header h1 {
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+            line-height: 1.3;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+        }
+
+        main {
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        section {
+            margin-bottom: 40px;
+            background-color: var(--highlight-color);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: var(--section-title);
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+            border-bottom: 2px solid #ddd;
+            padding-bottom: 8px;
+        }
+
+        p {
+            margin-bottom: 12px;
+            text-align: justify;
+        }
+
+        ul {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        li {
+            margin-bottom: 5px;
+        }
+
+        .graph-container {
+            margin: 25px 0;
+            padding: 15px;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .chart-title {
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: var(--section-title);
+            font-size: 1.1rem;
+        }
+
+        .data-highlight {
+            background-color: var(--neutral-color);
+            padding: 15px;
+            border-left: 4px solid var(--section-title);
+            margin: 15px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .data-highlight h3 {
+            color: var(--section-title);
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        footer {
+            background: linear-gradient(to right, var(--negative-color), var(--positive-color));
+            color: white;
+            text-align: center;
+            padding: 15px;
+            margin-top: 30px;
+            font-size: 0.9rem;
+        }
+
+        #back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--section-title);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 45px;
+            height: 45px;
+            text-align: center;
+            line-height: 45px;
+            cursor: pointer;
+            opacity: 0.7;
+            font-size: 1.2rem;
+            transition: opacity 0.3s;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        #back-to-top:hover {
+            opacity: 1;
+        }
+
+        .canvas-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>L'impact de la situation économique et sociale sur le stress académique des étudiants au service adapté</h1>
+    </header>
+
+    <main>
+        <section id="question">
+            <h2>Question de recherche</h2>
+            <p>Comment la situation financière et sociale influence-t-elle le niveau de <strong>stress académique</strong> chez les étudiants au service adapté du Cégep de Sherbrooke?</p>
+        </section>
+
+        <section id="objectifs">
+            <h2>Objectifs</h2>
+            <p>Cette recherche vise à :</p>
+            <ul>
+                <li>Analyser l'impact du <strong>soutien financier</strong> et des différents contextes sociaux sur le niveau de stress académique</li>
+                <li>Comparer les échantillons des données avec une autre étude sur le niveau de stress général des étudiants</li>
+            </ul>
+        </section>
+
+        <section id="hypothese">
+            <h2>Hypothèse</h2>
+            <p>Les personnes au service adapté vivent du stress académique, qui varie en fonction des contextes sociaux et économiques. De plus, elles en vivent <strong>davantage</strong> que des étudiants n'ayant pas de besoins particuliers. Pour finir, le soutien financier a un impact positif sur le niveau de stress.</p>
+        </section>
+
+        <section id="cadre">
+            <h2>Cadre théorique</h2>
+            <p>Cette recherche s'appuie sur plusieurs concepts fondamentaux :</p>
+            <ul>
+                <li>Pyramide de Maslow (les besoins fondamentaux)</li>
+                <li>Structure sociale</li>
+                <li>Marché du travail</li>
+                <li>Stress</li>
+                <li>Inégalité sociale</li>
+            </ul>
+        </section>
+
+        <section id="graphiques">
+            <h2>Graphiques</h2>
+            
+            <div class="graph-container">
+                <div class="chart-title">Bien-être général des étudiants <u>avant</u> l'accès à l'aide financière</div>
+                <div class="canvas-container">
+                    <canvas id="graphique1"></canvas>
+                </div>
+            </div>
+            
+            <div class="graph-container">
+                <div class="chart-title">Bien-être général des étudiants <u>après</u> l'accès à l'aide financière</div>
+                <div class="canvas-container">
+                    <canvas id="graphique2"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <section id="resultats">
+            <h2>Résultats</h2>
+            
+            <div class="data-highlight">
+                <h3>Corrélations observées avec le niveau de stress</h3>
+                <ul>
+                    <li><strong>Soutien gouvernemental :</strong> médiane générale de 7</li>
+                    <li><strong>Soutien familial :</strong> médiane avec soutien de 7 et médiane sans soutien de 8</li>
+                    <li><strong>Âge :</strong> 
+                        <ul>
+                            <li>Moins de 18 ans : médiane de 6</li>
+                            <li>18-21 ans : médiane de 7</li>
+                            <li>22-25 ans : médiane de 8</li>
+                            <li>25 ans et plus : médiane de 7</li>
+                        </ul>
+                    </li>
+                    <li><strong>Emploi :</strong> médiane avec emploi de 7, médiane sans emploi de 8</li>
+                </ul>
+            </div>
+            
+            <div class="data-highlight">
+                <h3>Comparaison avec une étude sur la population étudiante générale</h3>
+                <p><strong>Niveau moyen de stress :</strong></p>
+                <ul>
+                    <li>Notre recherche (service adapté) : Femmes 7,17 / Hommes 6,67</li>
+                    <li>Autre étude (population générale) : Femmes 4,75 / Hommes 4,03</li>
+                </ul>
+                <p>Ces résultats démontrent une différence significative dans l'échelle de stress, mais une similarité dans la répartition entre hommes et femmes.</p>
+            </div>
+        </section>
+
+        <section id="confirmation">
+            <h2>Confirmation de l'hypothèse</h2>
+            <p>Les résultats <strong>confirment</strong> qu'il y a un impact psychologique en lien avec le statut social et économique. Le soutien financier des membres de la famille est un facteur qui influence grandement l'état psychologique des étudiants au service adapté.</p>
+            <p>L'analyse des données avant et après l'accès à l'aide financière montre clairement une amélioration du bien-être général, validant notre hypothèse sur <strong>l'importance du soutien financier pour réduire le stress académique.</strong></p>
+        </section>
+    </main>
+
+    <footer>
+        <p>Recherche sur le stress académique des étudiants au service adapté - 2025</p>
+    </footer>
+
+    <button id="back-to-top" title="Retour en haut">↑</button>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <script>
+        // Back to top button
+        const backToTopButton = document.getElementById('back-to-top');
+        
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                backToTopButton.style.opacity = "0.7";
+            } else {
+                backToTopButton.style.opacity = "0";
+            }
+        });
+        
+        backToTopButton.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+        
+        // Wait for Chart.js to load
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(function() {
+                // Charts
+                const labels = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10'];
+                const data1 = [0, 0, 1, 2, 3, 7, 1, 4, 2, 2, 3];
+                const data2 = [0, 0, 0, 0, 1, 2, 7, 5, 3, 6, 1];
+                
+                // Create color gradients for charts
+                // Avant: mostly red/orange (indicating stress/lower wellbeing)
+                const colors1 = data1.map((_, i) => {
+                    const value = i / 10; // Normalize to 0-1
+                    // Red to yellow gradient
+                    if (value < 0.5) {
+                        return 'rgba(230, 57, 70, 0.7)'; // Red
+                    } else if (value < 0.7) {
+                        return 'rgba(244, 162, 97, 0.7)'; // Orange
+                    } else {
+                        return 'rgba(42, 157, 143, 0.7)'; // Green
+                    }
+                });
+                
+                // Après: mostly green (indicating improved wellbeing)
+                const colors2 = data2.map((_, i) => {
+                    const value = i / 10; // Normalize to 0-1
+                    // Red to green gradient
+                    if (value < 0.5) {
+                        return 'rgba(230, 57, 70, 0.7)'; // Red
+                    } else if (value < 0.7) {
+                        return 'rgba(244, 162, 97, 0.7)'; // Orange
+                    } else {
+                        return 'rgba(42, 157, 143, 0.7)'; // Green
+                    }
+                });
+                
+                const ctx1 = document.getElementById('graphique1').getContext('2d');
+                const ctx2 = document.getElementById('graphique2').getContext('2d');
+                
+                const graphique1 = new Chart(ctx1, {
+                    type: 'bar',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Nombre d\'étudiants',
+                            data: data1,
+                            backgroundColor: colors1,
+                            borderColor: colors1.map(c => c.replace('0.7', '1')),
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                max: 8,
+                                title: {
+                                    display: true,
+                                    text: 'Nombre d\'étudiants'
+                                }
+                            },
+                            x: {
+                                title: {
+                                    display: true,
+                                    text: 'Niveau de bien-être général'
+                                }
+                            }
+                        },
+                        plugins: {
+                            legend: {
+                                display: false
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    title: function(context) {
+                                        return 'Niveau de bien-être: ' + context[0].label;
+                                    },
+                                    label: function(context) {
+                                        return context.parsed.y + ' étudiants';
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+                
+                const graphique2 = new Chart(ctx2, {
+                    type: 'bar',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Nombre d\'étudiants',
+                            data: data2,
+                            backgroundColor: colors2,
+                            borderColor: colors2.map(c => c.replace('0.7', '1')),
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                max: 8,
+                                title: {
+                                    display: true,
+                                    text: 'Nombre d\'étudiants'
+                                }
+                            },
+                            x: {
+                                title: {
+                                    display: true,
+                                    text: 'Niveau de bien-être général'
+                                }
+                            }
+                        },
+                        plugins: {
+                            legend: {
+                                display: false
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    title: function(context) {
+                                        return 'Niveau de bien-être: ' + context[0].label;
+                                    },
+                                    label: function(context) {
+                                        return context.parsed.y + ' étudiants';
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            }, 500); // Small delay to ensure Chart.js is loaded
+        });
+    </script>
+</body>
+</html>
