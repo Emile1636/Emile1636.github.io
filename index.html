@@ -1,6 +1,354 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Un petit quiz pour toi 🌷</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:'Poppins',sans-serif;
+    background:linear-gradient(
+        180deg,
+        #fff9f5 0%,
+        #fdeef5 100%
+    );
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:20px;
+    color:#4a4a4a;
+}
+
+.container{
+    width:100%;
+    max-width:450px;
+}
+
+.card{
+    background:white;
+    border-radius:24px;
+    padding:28px;
+    box-shadow:0 12px 30px rgba(0,0,0,0.08);
+}
+
+.progress-container{
+    width:100%;
+    height:10px;
+    background:#f5dbe8;
+    border-radius:20px;
+    overflow:hidden;
+    margin-bottom:18px;
+}
+
+.progress{
+    height:100%;
+    width:0%;
+    background:#e8afc7;
+    transition:0.4s;
+}
+
+.small-text{
+    text-align:center;
+    color:#888;
+    font-size:0.9rem;
+    margin-bottom:18px;
+}
+
+h1{
+    text-align:center;
+    font-size:1.8rem;
+    margin-bottom:8px;
+}
+
+.subtitle{
+    text-align:center;
+    color:#777;
+    margin-bottom:28px;
+    line-height:1.5;
+}
+
+.question{
+    font-size:1.2rem;
+    font-weight:500;
+    margin-bottom:20px;
+    line-height:1.5;
+}
+
+.answers{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+}
+
+.answer-btn{
+    border:none;
+    background:#fff4f8;
+    border-radius:16px;
+    padding:16px;
+    font-size:1rem;
+    cursor:pointer;
+    transition:0.2s;
+    color:#4a4a4a;
+}
+
+.answer-btn:hover{
+    background:#fce2ee;
+}
+
+.answer-btn.selected{
+    background:#e8afc7;
+    color:white;
+}
+
+.feedback{
+    margin-top:20px;
+    text-align:center;
+    color:#666;
+    min-height:30px;
+}
+
+.next-btn{
+    width:100%;
+    margin-top:20px;
+    border:none;
+    background:#e8afc7;
+    color:white;
+    padding:14px;
+    border-radius:16px;
+    cursor:pointer;
+    font-size:1rem;
+    display:none;
+}
+
+.next-btn:hover{
+    opacity:0.9;
+}
+
+.result{
+    text-align:center;
+}
+
+.result h2{
+    margin-bottom:15px;
+}
+
+.result p{
+    line-height:1.7;
+    color:#666;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+    <div class="card" id="quizCard">
+
+        <div class="progress-container">
+            <div class="progress" id="progressBar"></div>
+        </div>
+
+        <div class="small-text" id="progressText">
+            🌷 1 souvenir sur 5
+        </div>
+
+        <h1>Un petit quiz pour toi</h1>
+
+        <p class="subtitle">
+            Quelques souvenirs, quelques situations,
+            et quelques questions importantes.
+        </p>
+
+        <div id="quizContent"></div>
+
+    </div>
+</div>
+
+<script>
+
+const questions = [
+{
+    question: "Quel était notre sujet de conversation préféré pendant cette période-là ?",
+    answers: [
+        "Réponse A",
+        "Réponse B",
+        "Réponse C",
+        "Réponse D"
+    ],
+    correct: 1,
+    feedbackCorrect: "Exactement 🌸",
+    feedbackWrong: "Presque, mais ce n'est pas ce dont je me souvenais."
+},
+{
+    question: "Tu arrives dans un café et il ne reste qu'une seule pâtisserie. Tu fais quoi ?",
+    answers: [
+        "Je la prends immédiatement",
+        "Je réfléchis longtemps",
+        "Je demande un avis",
+        "Je prends autre chose"
+    ],
+    correct: 2,
+    feedbackCorrect: "C'est exactement ce que j'aurais répondu pour toi ✨",
+    feedbackWrong: "Intéressant... je t'aurais imaginée autrement 🌷"
+},
+{
+    question: "Quelle qualité te représente le mieux ?",
+    answers: [
+        "Curieuse",
+        "Déterminée",
+        "Créative",
+        "Attentionnée"
+    ],
+    correct: 0,
+    feedbackCorrect: "C'est aussi celle que j'aurais choisie 💕",
+    feedbackWrong: "J'aurais probablement choisi une autre réponse ✨"
+},
+{
+    question: "Parmi ces choix, lequel te ressemble le plus ?",
+    answers: [
+        "Planifier",
+        "Improviser",
+        "Observer",
+        "Explorer"
+    ],
+    correct: 3,
+    feedbackCorrect: "Oui, ça te ressemble beaucoup 🌸",
+    feedbackWrong: "Je ne suis pas certain que c'est ce que j'aurais répondu."
+},
+{
+    question: "Quel souvenir te ferait probablement le plus sourire ?",
+    answers: [
+        "Souvenir A",
+        "Souvenir B",
+        "Souvenir C",
+        "Souvenir D"
+    ],
+    correct: 1,
+    feedbackCorrect: "Je pensais exactement à celui-là 💕",
+    feedbackWrong: "J'avais un autre souvenir en tête 🌷"
+}
+];
+
+let currentQuestion = 0;
+let score = 0;
+
+const quizContent = document.getElementById("quizContent");
+const progressBar = document.getElementById("progressBar");
+const progressText = document.getElementById("progressText");
+
+function renderQuestion(){
+
+    const q = questions[currentQuestion];
+
+    progressBar.style.width =
+        ((currentQuestion) / questions.length) * 100 + "%";
+
+    progressText.textContent =
+        `🌷 ${currentQuestion + 1} souvenir${questions.length > 1 ? "s" : ""} sur ${questions.length}`;
+
+    quizContent.innerHTML = `
+        <div class="question">${q.question}</div>
+
+        <div class="answers">
+            ${q.answers.map((answer,index)=>`
+                <button class="answer-btn"
+                    onclick="selectAnswer(${index})">
+                    ${answer}
+                </button>
+            `).join("")}
+        </div>
+
+        <div class="feedback" id="feedback"></div>
+
+        <button class="next-btn" id="nextBtn" onclick="nextQuestion()">
+            Continuer →
+        </button>
+    `;
+}
+
+function selectAnswer(index){
+
+    const q = questions[currentQuestion];
+
+    document.querySelectorAll('.answer-btn').forEach(btn=>{
+        btn.disabled = true;
+    });
+
+    if(index === q.correct){
+        score++;
+        document.getElementById("feedback").textContent =
+            q.feedbackCorrect;
+    }else{
+        document.getElementById("feedback").textContent =
+            q.feedbackWrong;
+    }
+
+    document.getElementById("nextBtn").style.display = "block";
+}
+
+function nextQuestion(){
+
+    currentQuestion++;
+
+    if(currentQuestion < questions.length){
+        renderQuestion();
+    }else{
+        showResult();
+    }
+}
+
+function showResult(){
+
+    progressBar.style.width = "100%";
+
+    quizContent.innerHTML = `
+        <div class="result">
+
+            <h2>Quiz terminé 🌸</h2>
+
+            <p>
+                Merci d'avoir joué.
+            </p>
+
+            <br>
+
+            <p>
+                ${score} souvenir${score > 1 ? "s" : ""}
+                retrouvé${score > 1 ? "s" : ""}
+                sur ${questions.length}.
+            </p>
+
+            <br>
+
+            <p>
+                J'espère que ça t'a fait sourire 💕
+            </p>
+
+        </div>
+    `;
+}
+
+renderQuestion();
+
+</script>
+
+</body>
+</html>
+
+<!-- Début de votre section en commentaire
+<!DOCTYPE html>
+<html lang="fr">
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Stress Académique - Recherche</title>
@@ -642,3 +990,4 @@
     </script>
 </body>
 </html>
+Fin de votre section en commentaire -->
