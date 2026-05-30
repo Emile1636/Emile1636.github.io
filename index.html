@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Un petit quiz pour toi 🌷</title>
+<title>On va voir si toi aussi tu fais des efforts</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 
@@ -159,10 +159,10 @@ h1{
         </div>
 
         <div class="small-text" id="progressText">
-            🌷 1 souvenir sur 5
+            1 souvenir sur 5
         </div>
 
-        <h1>Un petit quiz pour toi</h1>
+        <h1>On va voir si toi aussi tu fais des efforts</h1>
 
         <p class="subtitle">
             Quelques souvenirs, quelques situations,
@@ -178,7 +178,7 @@ h1{
 
 const questions = [
 {
-    question: "Quel était notre sujet de conversation préféré pendant cette période-là ?",
+    question: "Question 1",
     answers: [
         "Réponse A",
         "Réponse B",
@@ -186,57 +186,57 @@ const questions = [
         "Réponse D"
     ],
     correct: 1,
-    feedbackCorrect: "Exactement 🌸",
-    feedbackWrong: "Presque, mais ce n'est pas ce dont je me souvenais."
+    feedbackCorrect: "Damn comment ta trouvé",
+    feedbackWrong: "Trop nul"
 },
 {
-    question: "Tu arrives dans un café et il ne reste qu'une seule pâtisserie. Tu fais quoi ?",
+    question: "Question 2",
     answers: [
-        "Je la prends immédiatement",
-        "Je réfléchis longtemps",
-        "Je demande un avis",
-        "Je prends autre chose"
-    ],
-    correct: 2,
-    feedbackCorrect: "C'est exactement ce que j'aurais répondu pour toi ✨",
-    feedbackWrong: "Intéressant... je t'aurais imaginée autrement 🌷"
-},
-{
-    question: "Quelle qualité te représente le mieux ?",
-    answers: [
-        "Curieuse",
-        "Déterminée",
-        "Créative",
-        "Attentionnée"
-    ],
-    correct: 0,
-    feedbackCorrect: "C'est aussi celle que j'aurais choisie 💕",
-    feedbackWrong: "J'aurais probablement choisi une autre réponse ✨"
-},
-{
-    question: "Parmi ces choix, lequel te ressemble le plus ?",
-    answers: [
-        "Planifier",
-        "Improviser",
-        "Observer",
-        "Explorer"
-    ],
-    correct: 3,
-    feedbackCorrect: "Oui, ça te ressemble beaucoup 🌸",
-    feedbackWrong: "Je ne suis pas certain que c'est ce que j'aurais répondu."
-},
-{
-    question: "Quel souvenir te ferait probablement le plus sourire ?",
-    answers: [
-        "Souvenir A",
-        "Souvenir B",
-        "Souvenir C",
-        "Souvenir D"
+        "Réponse A",
+        "Réponse B",
+        "Réponse C",
+        "Réponse D"
     ],
     correct: 1,
-    feedbackCorrect: "Je pensais exactement à celui-là 💕",
-    feedbackWrong: "J'avais un autre souvenir en tête 🌷"
-}
+    feedbackCorrect: "Bon",
+    feedbackWrong: "Mauvais"
+},
+{
+    question: "Question 3",
+    answers: [
+        "Réponse A",
+        "Réponse B",
+        "Réponse C",
+        "Réponse D"
+    ],
+    correct: 1,
+    feedbackCorrect: "Bon",
+    feedbackWrong: "Mauvais"
+},
+{
+    question: "Question 4",
+    answers: [
+        "Réponse A",
+        "Réponse B",
+        "Réponse C",
+        "Réponse D"
+    ],
+    correct: 1,
+    feedbackCorrect: "Bon",
+    feedbackWrong: "Mauvais"
+},
+{
+    question: "Question 5",
+    answers: [
+        "Réponse A",
+        "Réponse B",
+        "Réponse C",
+        "Réponse D"
+    ],
+    correct: 1,
+    feedbackCorrect: "Bon",
+    feedbackWrong: "Mauvais"
+},
 ];
 
 let currentQuestion = 0;
@@ -254,7 +254,7 @@ function renderQuestion(){
         ((currentQuestion) / questions.length) * 100 + "%";
 
     progressText.textContent =
-        `🌷 ${currentQuestion + 1} souvenir${questions.length > 1 ? "s" : ""} sur ${questions.length}`;
+        `${currentQuestion + 1} bonnes réponses{questions.length > 1 ? "s" : ""} sur ${questions.length}`;
 
     quizContent.innerHTML = `
         <div class="question">${q.question}</div>
@@ -314,10 +314,10 @@ function showResult(){
     quizContent.innerHTML = `
         <div class="result">
 
-            <h2>Quiz terminé 🌸</h2>
+            <h2>Fini! J'ai du travail à continuer</h2>
 
             <p>
-                Merci d'avoir joué.
+                Merci d'avoir pris le temps pareil.
             </p>
 
             <br>
@@ -331,7 +331,7 @@ function showResult(){
             <br>
 
             <p>
-                J'espère que ça t'a fait sourire 💕
+                miaou
             </p>
 
         </div>
