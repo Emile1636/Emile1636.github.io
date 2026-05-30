@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Quiz QCM</title>
+  <title>Quiz</title>
 
   <style>
     * {
@@ -21,6 +21,7 @@
       justify-content: center;
       align-items: center;
       padding: 18px;
+      overflow-x: hidden;
     }
 
     .app {
@@ -31,6 +32,8 @@
       box-shadow: 0 20px 45px rgba(168, 55, 115, 0.25);
       overflow: hidden;
       border: 1px solid rgba(255, 255, 255, 0.8);
+      position: relative;
+      z-index: 10;
     }
 
     .header {
@@ -156,10 +159,38 @@
       background: #ffe6f3;
     }
 
-    .answer-btn.wrong {
-      border-color: #c9a2b8;
-      background: #f7edf3;
-      opacity: 0.75;
+    .answer-btn.wrong-shake {
+      animation: shake 0.25s ease;
+      border-color: #d63384;
+      background: #fff0f8;
+    }
+
+    @keyframes shake {
+      0% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      50% { transform: translateX(5px); }
+      75% { transform: translateX(-5px); }
+      100% { transform: translateX(0); }
+    }
+
+    .floating-answer {
+      position: fixed;
+      color: #e83e8c;
+      background: #ffe6f3;
+      border: 2px solid #ff9fcb;
+      padding: 10px 16px;
+      border-radius: 999px;
+      font-weight: 900;
+      box-shadow: 0 8px 24px rgba(232, 62, 140, 0.28);
+      z-index: 999;
+      animation: pop 0.2s ease;
+      pointer-events: none;
+      white-space: nowrap;
+    }
+
+    @keyframes pop {
+      from { transform: scale(0.4); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
     }
 
     .feedback {
@@ -266,8 +297,8 @@
 <body>
   <main class="app">
     <section class="header">
-      <h1>Quiz amusant</h1>
-      <p>Choisis la meilleure réponse pour chaque situation.</p>
+      <h1>On va tester TA mémoire</h1>
+      <p>Choisis la meilleure réponse pour chaque situation (bonne chance)</p>
     </section>
 
     <section class="content">
@@ -297,7 +328,7 @@
       <div id="resultScreen" class="result-screen">
         <div id="finalScore" class="score-circle">0/0</div>
         <h2>Résultat final</h2>
-        <p id="resultText">Texte de résultat...</p>
+        <p id="resultText">Merci d'avoir jouer le jeu!</p>
         <button id="restartBtn" class="restart-btn">Recommencer</button>
       </div>
     </section>
@@ -306,65 +337,65 @@
   <script>
     const questions = [
       {
-        question: "Question 1...",
+        question: "Quel est le nom de MON chat (le gris et blanc)?",
         answers: [
-          "Réponse A...",
-          "Réponse B...",
-          "Réponse C...",
-          "Réponse D..."
-        ],
-        correct: 0,
-        feedback: "Explication de la bonne réponse 1..."
-      },
-      {
-        question: "Question 2...",
-        answers: [
-          "Réponse A...",
-          "Réponse B...",
-          "Réponse C...",
-          "Réponse D..."
-        ],
-        correct: 1,
-        feedback: "Explication de la bonne réponse 2..."
-      },
-      {
-        question: "Question 3...",
-        answers: [
-          "Réponse A...",
-          "Réponse B...",
-          "Réponse C...",
-          "Réponse D..."
-        ],
-        correct: 2,
-        feedback: "Explication de la bonne réponse 3..."
-      },
-      {
-        question: "Question 4...",
-        answers: [
-          "Réponse A...",
-          "Réponse B...",
-          "Réponse C...",
-          "Réponse D..."
+          "Dobby",
+          "Moka",
+          "Sushi",
+          "Bébé"
         ],
         correct: 3,
-        feedback: "Explication de la bonne réponse 4..."
+        feedback: "Facile pour commencer..."
       },
       {
-        question: "Question 5...",
+        question: "Quelle est le numéro de ma promotion à l'université?",
         answers: [
-          "Réponse A...",
-          "Réponse B...",
-          "Réponse C...",
-          "Réponse D..."
+          "Promo 69",
+          "Promo 70",
+          "Promo 71",
+          "Promo 72"
+        ],
+        correct: 2,
+        feedback: "Si tu t'es mélangé avec celle de ton ex je ri"
+      },
+      {
+        question: "Je mesure combien?",
+        answers: [
+          "Plus que toi",
+          "6 pied",
+          "6 pied 1",
+          "6 pied 2"
         ],
         correct: 0,
-        feedback: "Explication de la bonne réponse 5..."
+        feedback: "En secondaire 1 tu disais me dépasser, LOL"
+      },
+      {
+        question: "Quel est le nom de mon DEC?",
+        answers: [
+          "Sciences de l'informatiques et mathématiques",
+          "Sciences informatiques et mathématiques",
+          "Sciences en informatiques, mathématiques",
+          "J'ai plus d'idée"
+        ],
+        correct: 1,
+        feedback: "T'es mieux de pas tricher"
+      },
+      {
+        question: "Qui est le/la meilleur au Lego?",
+        answers: [
+          "Émile",
+          "Anne-Soo"
+        ],
+        correct: 0,
+        specialFinal: true,
+        feedback: "awnn merci :))"
       }
     ];
 
     let currentQuestion = 0;
     let score = 0;
     let hasAnswered = false;
+    let wrongFinalClicks = 0;
 
     const quizScreen = document.getElementById("quizScreen");
     const resultScreen = document.getElementById("resultScreen");
@@ -411,8 +442,20 @@
     function selectAnswer(button, selectedIndex) {
       if (hasAnswered) return;
 
-      hasAnswered = true;
       const question = questions[currentQuestion];
+
+      if (question.specialFinal && selectedIndex !== question.correct) {
+        wrongFinalClicks++;
+
+        button.classList.remove("wrong-shake");
+        void button.offsetWidth;
+        button.classList.add("wrong-shake");
+
+        createFloatingCorrectAnswer(question.answers[question.correct]);
+        return;
+      }
+
+      hasAnswered = true;
       const answerButtons = document.querySelectorAll(".answer-btn");
 
       answerButtons.forEach((btn, index) => {
@@ -423,15 +466,49 @@
       });
 
       if (selectedIndex === question.correct) {
+      
+        // Efface tous les popups avant de continuer
+        clearFloatingAnswers();
+      
         score++;
         scoreLabel.textContent = `Score : ${score}`;
-      } else {
-        button.classList.add("wrong");
       }
 
       feedback.textContent = question.feedback;
       feedback.classList.add("show");
       nextBtn.disabled = false;
+    }
+
+    function createFloatingCorrectAnswer(text) {
+      const clone = document.createElement("div");
+      clone.className = "floating-answer";
+      clone.textContent = text;
+
+      const randomLeft = Math.random() * 70 + 8;
+      const randomTop = Math.random() * 70 + 8;
+      const fontSize = Math.min(18 + wrongFinalClicks * 9, 72);
+
+      clone.style.left = `${randomLeft}vw`;
+      clone.style.top = `${randomTop}vh`;
+      clone.style.fontSize = `${fontSize}px`;
+
+      document.body.appendChild(clone);
+    }
+
+    function clearFloatingAnswers() {
+    
+      document.querySelectorAll(".floating-answer").forEach((element) => {
+    
+        element.style.transition = "all 0.5s ease";
+        element.style.opacity = "0";
+        element.style.transform = "scale(0.5)";
+    
+        setTimeout(() => {
+          element.remove();
+        }, 500);
+    
+      });
+    
     }
 
     function nextQuestion() {
@@ -448,6 +525,7 @@
       quizScreen.classList.add("hide");
       resultScreen.classList.add("show");
       progressFill.style.width = "100%";
+      clearFloatingAnswers();
 
       finalScore.textContent = `${score}/${questions.length}`;
       resultText.textContent = "Texte de résultat final...";
@@ -456,6 +534,10 @@
     function restartQuiz() {
       currentQuestion = 0;
       score = 0;
+      hasAnswered = false;
+      wrongFinalClicks = 0;
+      clearFloatingAnswers();
+
       quizScreen.classList.remove("hide");
       resultScreen.classList.remove("show");
       loadQuestion();
@@ -468,6 +550,7 @@
   </script>
 </body>
 </html>
+
 
 
 <!-- Début de votre section en commentaire
